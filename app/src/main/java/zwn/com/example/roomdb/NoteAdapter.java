@@ -47,19 +47,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                dialog.dismiss();
-                                Intent intent = new Intent(context, EditNoteActivity.class);
-                                intent.putExtra("Note", note);
-                                context.startActivity(intent);
-                                break;
-                            case 1:
-                                dialog.dismiss();
-                                new DeleteTask(db).execute(note);
-                                noteList.remove(i);
-                                break;
-                        }
+                    switch (which) {
+                        case 0:
+                            dialog.dismiss();
+                            Intent intent = new Intent(context, AddNoteActivity.class);
+                            intent.putExtra("Note", note);
+                            context.startActivity(intent);
+                            break;
+                        case 1:
+                            dialog.dismiss();
+                            new DeleteTask(db).execute(note);
+                            noteList.remove(i);
+                            break;
+                    }
                     }
                 });
                 AlertDialog dialog = builder.create();

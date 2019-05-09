@@ -13,8 +13,8 @@ import java.util.concurrent.ExecutionException;
 public class EditNoteActivity extends AppCompatActivity {
     EditText editTitle, editDesc;
     NoteDataBase db;
-    private String title = "";
-    private String des = "";
+    String title = "";
+    String des = "";
     private Note note;
 
     @Override
@@ -63,7 +63,7 @@ public class EditNoteActivity extends AppCompatActivity {
         return isValid;
     }
 
-    private static class EditTask extends AsyncTask<Note, Void, Boolean> {
+    public static class EditTask extends AsyncTask<Note, Void, Boolean> {
         private NoteDataBase db;
 
         public EditTask(NoteDataBase db) {

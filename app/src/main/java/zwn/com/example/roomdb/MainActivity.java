@@ -33,21 +33,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         RecyclerView rvNote = findViewById(R.id.rvNote);
         setSupportActionBar(toolbar);
-        db = Room.databaseBuilder(this,NoteDataBase.class,DB_NAME).build();
+        db = NoteDataBase.getNoteDataBase(this);
 
         rvNote.setLayoutManager(new LinearLayoutManager(this));
         rvNote.setHasFixedSize(true);
         rvNote.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
         noteList = new ArrayList<>();
-        adapter = new NoteAdapter(this,noteList, db);
+        adapter = new NoteAdapter(this, noteList, db);
         rvNote.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         getNote();
     }
 
-    private void getNote(){
+    private void getNote() {
         db.daoAccess().getAllNote().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(@Nullable List<Note> notes) {
@@ -67,5 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setNoteList(noteList);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NoteDataBase.destroyInstance();
     }
 }
